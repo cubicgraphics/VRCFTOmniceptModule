@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using NetMQ;
 using System.Reflection;
 using VRCFaceTracking;
-using VRCFTOmniceptModule.EyeLidTools;
 
 namespace VRCFTOmniceptModule;
 
@@ -38,10 +37,6 @@ public class OmniceptModule : ExtTrackingModule
         catch (Exception e)
         {
             Logger?.LogError("[VRCFTOmniceptModule] Failed to load for reason {E}", e);
-        }
-        if (m_isConnected)
-        {
-            SmoothFloatWorkers.Init();
         }
 
         List<Stream> streams = new()
@@ -93,7 +88,6 @@ public class OmniceptModule : ExtTrackingModule
         }
         m_isConnected = false;
         Glia.cleanupNetMQConfig();
-        SmoothFloatWorkers.Destroy();
     }
 
     public override (bool SupportsEye, bool SupportsExpression) Supported => (true, false);
